@@ -1,7 +1,7 @@
 const request = require('request');
 
 function getClients(callback) {
-    request('https://robin-hotel-web-api.herokuapp.com/clients/all', { json: true }, function (err, res, body) {
+    request('https://robin-hotel-web-api.herokuapp.com/clients', { json: true }, function (err, res, body) {
         if (err) {
             callback('Erreur', err);
         } else {
