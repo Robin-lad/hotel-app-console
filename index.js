@@ -1,3 +1,3 @@
-const pres = require('./presentation.js')
+const {start} = require('./presentation.js')
 
-pres.start();
+start();
