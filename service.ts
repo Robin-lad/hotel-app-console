@@ -1,15 +1,16 @@
-const request = require('request-promise-native');
+import request from 'request-promise-native'
+import { Client } from './domain'
 
-class Service {
+export class Service {
 
-    constructor(){}
+    constructor() { }
 
     getClients() {
         return request('https://robin-hotel-web-api.herokuapp.com/clients', { json: true })
-            .then(c => c.map(v => `${v.nom} ${v.prenoms}`))
+            .then(c => c.map((v:Client) =>  `${v.nom} ${v.prenoms}` ))
     }
 
-    addClient(nom, prenom) {
+    addClient(nom:string, prenom:string) {
         return request.post({
             headers: { 'content-type': 'application/json' },
             url: 'https://robin-hotel-web-api.herokuapp.com/clients',
@@ -17,14 +18,12 @@ class Service {
         })
     }
 
-    rechercheParNom(nom) {
+    rechercheParNom(nom: string) {
         return request(`https://robin-hotel-web-api.herokuapp.com/clients/search/${nom}`, { json: true })
-            .then(v => `${v.nom} ${v.prenoms}`)
+            .then((v:Client) => `${v.nom} ${v.prenoms}`)
     }
 
-    verifieChambre(numero) {
+    verifieChambre(numero: any) {
         return request(`https://robin-hotel-web-api.herokuapp.com/reservations/chambre/${numero}`, { json: true })
     }
-
 }
-module.exports = { Service }

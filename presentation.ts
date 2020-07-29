@@ -1,10 +1,11 @@
 const l = console.log
-const {Service} = require('./service.js')
+import { Service } from './service'
+import { Client } from './domain';
 const waitForUserInput = require('wait-for-user-input');
 
 let continuer = true;
 
-async function start() {
+export async function start() {
 
     const serv = new Service()
 
@@ -24,7 +25,7 @@ async function start() {
             case '1':
                 l('>> Liste des clients')
                 const listeClient$ = serv.getClients()
-                listeClient$.then(c => l(c)).catch(err => l(err))
+                listeClient$.then((c:Client) => l(c)).catch(err => l(err))
                 break;
 
             case '2':
@@ -33,17 +34,17 @@ async function start() {
                 const ajoutClient$ = serv.addClient(nom, prenom)
                 ajoutClient$.then(c => l(c)).catch(err => l(err))
                 break;
-            
+
             case '3':
                 const searchNom = await waitForUserInput('Quel est le NOM du client à rechercher ?')
                 const rechercheParNom$ = serv.rechercheParNom(searchNom)
-                rechercheParNom$.then(c => l(c)).catch(err => l(err))
+                rechercheParNom$.then((c:string) => l(c)).catch(err => l(err))
                 break;
 
             case '4':
                 const numChambre = await waitForUserInput('Quel est le numero de la chambre ?')
                 const verifieChambre$ = serv.verifieChambre(numChambre)
-                verifieChambre$.then(c => l(c)).catch(err => l(err))
+                verifieChambre$.then((c:string) => l(c)).catch(err => l(err))
                 break;
 
             case '99':
@@ -53,5 +54,3 @@ async function start() {
         }
     }
 }
-
-module.exports = {start};
